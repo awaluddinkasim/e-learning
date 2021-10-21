@@ -312,6 +312,30 @@ const router = new Router({
                     rule: 'editor',
                 }
             },
+            {
+                path: '/admin/dosen',
+                name: 'admin-daftar-dosen',
+                component: () => import('./views/pages/admin/dosen/user-list/UserList.vue'),
+                meta: {
+                    rule: 'editor',
+                }
+            },
+            {
+                path: '/admin/mahasiswa',
+                name: 'admin-daftar-mahasiswa',
+                component: () => import('./views/pages/admin/mahasiswa/user-list/UserList.vue'),
+                meta: {
+                    rule: 'editor',
+                }
+            },
+            {
+              path: '/admin/chat',
+              name: 'admin-chat',
+              component: () => import('./views/apps/chat/Chat.vue'),
+              meta: {
+                  rule: 'editor',
+              }
+          },
           ],
         },
     // =============================================================================

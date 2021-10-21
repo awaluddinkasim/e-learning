@@ -15,55 +15,110 @@
         icon-pack="feather"
         icon="icon-plus"
         @click="toggleAddUser"
-        >Tambah Mahasiswa</vs-button
+        >Tambah Dosen</vs-button
       >
       <Modal v-if="showAddUser" @close="toggleAddUser">
-        <div class="vx-row">
-          <div class="vx-col w-full mt-5">
-            <vs-input
-              label="Username"
-              v-model="addForm.username"
-              class="w-full"
-            />
-          </div>
-        </div>
+        <div class="mt-5">
+          <form-wizard
+            color="rgba(var(--vs-primary), 1)"
+            :title="null"
+            :subtitle="null"
+            finishButtonText="Tambah"
+            @on-complete="add"
+          >
+            <tab-content title="Step 1" class="mb-5">
+              <!-- tab 1 content -->
+              <div class="vx-row">
+                <div class="vx-col w-full mt-5">
+                  <vs-input
+                    label="Username"
+                    v-model="addForm.username"
+                    class="w-full"
+                  />
+                </div>
+                <div class="vx-col w-full mt-5">
+                  <vs-input
+                    label="Nama Lengkap"
+                    v-model="addForm.name"
+                    class="w-full"
+                  />
+                </div>
 
-        <div class="vx-row">
-          <div class="vx-col w-full mt-5">
-            <vs-input
-              label="Nama Lengkap"
-              v-model="addForm.name"
-              class="w-full"
-            />
-          </div>
-        </div>
+              </div>
+              <div class="vx-row">
+                <div class="vx-col w-full">
+                  <vs-select
+                    v-model="addForm.jk"
+                    class="w-full select-large mt-5"
+                    label="Jenis Kelamin"
+                  >
+                    <vs-select-item
+                      value="L"
+                      text="Laki-laki"
+                    />
+                    <vs-select-item
+                      value="P"
+                      text="Perempuan"
+                    />
+                  </vs-select>
+                </div>
+              </div>
+            </tab-content>
 
-        <div class="vx-row">
-          <div class="vx-col w-full mt-5">
-            <vs-input
-              label="Password"
-              v-model="addForm.password"
-              class="w-full"
-              type="password"
-            />
-          </div>
-        </div>
+            <!-- tab 2 content -->
+            <tab-content title="Step 2" class="mb-5">
+              <div class="vx-row">
+                <div class="vx-col w-full mt-5">
+                  <vs-input
+                    label="Password"
+                    v-model="addForm.password"
+                    class="w-full"
+                    type="password"
+                  />
+                </div>
+              </div>
+            </tab-content>
 
-        <div class="vx-row">
-          <div class="vx-col w-full">
-            <vs-select
-              v-model="addForm.jk"
-              class="w-full select-large mt-5"
-              label="Jenis Kelamin"
-            >
-              <vs-select-item value="L" text="Laki-laki" />
-              <vs-select-item value="P" text="Perempuan" />
-            </vs-select>
-          </div>
+            <!-- tab 3 content -->
+            <tab-content title="Step 3" class="mb-5">
+              <div class="vx-row">
+                <div class="vx-col w-full">
+                  <vs-select
+                    v-model="addForm.fakultas"
+                    class="w-full select-large mt-5"
+                    label="Fakultas"
+                  >
+                    <vs-select-item
+                      :key="index"
+                      :value="item.value"
+                      :text="item.text"
+                      v-for="(item, index) in daftarFakultas"
+                      class="w-full"
+                    />
+                  </vs-select>
+                </div>
+              </div>
+
+              <div class="vx-row">
+                <div class="vx-col w-full">
+                  <vs-select
+                    v-model="addForm.prodi"
+                    class="w-full select-large mt-5"
+                    label="Program Studi"
+                  >
+                    <vs-select-item
+                      :key="index"
+                      :value="item.value"
+                      :text="item.text"
+                      v-for="(item, index) in filteredProdi"
+                      class="w-full"
+                    />
+                  </vs-select>
+                </div>
+              </div>
+            </tab-content>
+          </form-wizard>
         </div>
-        <vs-button class="bg-primary mt-5 ml-auto" @click="add"
-          >Tambah</vs-button
-        >
       </Modal>
 
       <div class="flex flex-wrap items-center">
@@ -155,7 +210,7 @@ import "vue-form-wizard/dist/vue-form-wizard.min.css";
 
 // Cell Renderer
 import CellRendererActions from "./cell-renderer/CellRendererActions.vue";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -173,15 +228,92 @@ export default {
   data() {
     return {
       addForm: {
-        tipe: "user",
+        tipe: "dosen",
         username: "",
         name: "",
         password: "",
-        jk: ""
+        jk: "",
+        fakultas: "",
+        prodi: ""
       },
 
       searchQuery: "",
       showAddUser: false,
+
+      daftarFakultas: [
+        { index: 0, text: "Fakultas Teknik", value: "Teknik" },
+        {
+          index: 1,
+          text: "Fakultas Keguruan dan Ilmu Pendidikan",
+          value: "Keguruan dan Ilmu Pendidikan"
+        },
+        {
+          index: 2,
+          text: "Fakultas Matematika dan Ilmu Pengetahuan Alam",
+          value: "Matematika dan Ilmu Pengetahuan Alam"
+        },
+        { index: 3, text: "Fakultas Pertanian", value: "Pertanian" }
+      ],
+
+      daftarProdi: [
+        // teknik
+        {
+          index: 0,
+          text: "Teknik Informatika",
+          value: "Teknik Informatika",
+          fakultas: "Teknik"
+        },
+        {
+          index: 1,
+          text: "Teknik Mesin",
+          value: "Teknik Mesin",
+          fakultas: "Teknik"
+        },
+        {
+          index: 2,
+          text: "Teknik Industri",
+          value: "Teknik Industri",
+          fakultas: "Teknik"
+        },
+        {
+          index: 3,
+          text: "Teknik Elektro",
+          value: "Teknik Elektro",
+          fakultas: "Teknik"
+        },
+        {
+          index: 4,
+          text: "Teknik Sipil",
+          value: "Teknik Sipil",
+          fakultas: "Teknik"
+        },
+        // mipa
+        { index: 5, text: "Farmasi", value: "Farmasi", fakultas: "Matematika dan Ilmu Pengetahuan Alam" },
+        { index: 6, text: "Kimia", value: "Kimia", fakultas: "Matematika dan Ilmu Pengetahuan Alam" },
+        // fkip
+        { index: 7, text: "PGSD", value: "PGSD", fakultas: "Keguruan dan Ilmu Pendidikan" },
+        {
+          index: 8,
+          text: "Pend. Matematika",
+          value: "Pend. Matematika",
+          fakultas: "Keguruan dan Ilmu Pendidikan"
+        },
+        // faperta
+        {
+          index: 9,
+          text: "Agroteknologi",
+          value: "Agroteknologi",
+          fakultas: "Pertanian"
+        },
+        {
+          index: 10,
+          text: "Agribisnis",
+          value: "Agribisnis",
+          fakultas: "Pertanian"
+        }
+      ],
+
+      filteredProdi: [],
 
       // AgGrid
       gridApi: null,
@@ -195,20 +327,31 @@ export default {
         {
           headerName: "Username",
           field: "username",
-          width: 250,
+          width: 190,
           filter: true
         },
         {
           headerName: "Nama Lengkap",
           field: "name",
           filter: true,
-          width: 350
+          width: 280
         },
         {
           headerName: "L/P",
           field: "jk",
           filter: true,
-          width: 150
+          width: 100
+        },
+        {
+          headerName: "Fakultas",
+          field: "fakultas",
+          filter: true,
+          width: 200
+        },
+        {
+          headerName: "Program Studi",
+          field: "prodi",
+          filter: true
         },
         {
           headerName: "",
@@ -237,13 +380,23 @@ export default {
     departmentFilter(obj) {
       this.setColumnFilter("department", obj.value);
     },
+    "addForm.fakultas": {
+      handler() {
+        let prodi = this.daftarProdi.filter(prodi => {
+          return prodi.fakultas == this.addForm.fakultas;
+        });
+        this.addForm.prodi = "";
+        this.filteredProdi = prodi;
+      },
+      deep: true
+    },
   },
   computed: {
     ...mapGetters({
-      users: "userManagement/getMahasiswa"
+      users: 'userManagement/getDosen'
     }),
     usersData() {
-      return this.users;
+      return this.users
     },
     paginationPageSize() {
       if (this.gridApi) return this.gridApi.paginationGetPageSize();
@@ -265,19 +418,19 @@ export default {
   },
   methods: {
     ...mapActions({
-      addUser: "userManagement/addUser",
-      fetchUsers: "userManagement/fetchUsers"
+      addUser: 'userManagement/addUser',
+      fetchUsers: 'userManagement/fetchUsers'
     }),
     add() {
-      this.$vs.loading();
+      this.$vs.loading()
       this.addUser(this.addForm).then(() => {
-        this.toggleAddUser();
+        this.toggleAddUser()
         setTimeout(() => {
-          this.fetchUsers("user").then(() => {
-            this.$vs.loading.close();
-          });
+          this.fetchUsers("dosen").then(() => {
+            this.$vs.loading.close()
+          })
         }, 1000);
-      });
+      })
     },
     toggleAddUser() {
       this.showAddUser = !this.showAddUser;
@@ -331,7 +484,7 @@ export default {
     //   this.$store.registerModule('userManagement', moduleUserManagement)
     //   moduleUserManagement.isRegistered = true
     // }
-    this.fetchUsers("user");
+    this.fetchUsers("dosen")
   }
 };
 </script>

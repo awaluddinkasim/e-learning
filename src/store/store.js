@@ -19,6 +19,7 @@ import actions from "./actions"
 Vue.use(Vuex)
 
 import moduleAuth from './auth/moduleAuth.js'
+import moduleUserManagement from './user-management/moduleUserManagement.js'
 
 
 export default new Vuex.Store({
@@ -28,6 +29,7 @@ export default new Vuex.Store({
     actions,
     modules: {
         auth: moduleAuth,
+        userManagement: moduleUserManagement
     },
     strict: process.env.NODE_ENV !== 'production'
 })

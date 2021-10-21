@@ -1,18 +1,32 @@
 <template>
     <div class="text-center">
-      <feather-icon icon="Edit3Icon" svgClasses="h-5 w-5 mr-4 hover:text-primary cursor-pointer" @click="oi" />
-      <feather-icon icon="Trash2Icon" svgClasses="h-5 w-5 hover:text-danger cursor-pointer"  />
+      <feather-icon icon="Edit3Icon" svgClasses="h-5 w-5 mr-4 hover:text-primary cursor-pointer" @click="editRecord" />
+      <feather-icon icon="Trash2Icon" svgClasses="h-5 w-5 hover:text-danger cursor-pointer" @click="confirmDeleteRecord" />
     </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
     export default {
         name: 'CellRendererActions',
+        computed: {
+          user() {
+            return {
+              tipe: "dosen",
+              id: this.params.data.id,
+              username: this.params.data.username,
+              name: this.params.data.name,
+              jk: this.params.data.jk,
+              fakultas: this.params.data.fakultas,
+              prodi: this.params.data.prodi,
+            }
+          }
+        },
         methods: {
-          oi() {
-            alert("haha "+ this.params.data.name)
-            this.$emit("toggleAddUser")
-          },
+          ...mapActions({
+            deleteUser: 'userManagement/deleteUser',
+            fetchUsers: 'userManagement/fetchUsers'
+          }),
           editRecord() {
             this.$router.push("/apps/user/user-edit/" + 268).catch(() => {})
 
@@ -28,14 +42,23 @@
               type: 'confirm',
               color: 'danger',
               title: `Confirm Delete`,
-              text: `You are about to delete "${this.params.data.username}"`,
+              text: `Yakin ingin menghapus "${this.params.data.name}"`,
               accept: this.deleteRecord,
               acceptText: "Delete"
             })
           },
           deleteRecord() {
-            /* Below two lines are just for demo purpose */
+            // console.log(this.user)
+            this.$vs.loading()
+            this.deleteUser(this.user)
+            setTimeout(() => {
+              this.$vs.loading.close()
+              this.fetchUsers("dosen")
+            }, 1000);
             this.showDeleteSuccess()
+
+            /* Below two lines are just for demo purpose */
+
 
             /* UnComment below lines for enabling true flow if deleting user */
             // this.$store.dispatch("userManagement/removeRecord", this.params.data.id)
@@ -46,7 +69,7 @@
             this.$vs.notify({
               color: 'success',
               title: 'User Deleted',
-              text: 'The selected user was successfully deleted'
+              text: 'Akun tersebut sudah dihapus'
             })
           }
         }

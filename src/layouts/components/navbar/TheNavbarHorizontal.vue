@@ -23,8 +23,6 @@
 
       <i18n />
 
-      <search-bar />
-
       <cart-drop-down />
 
       <notification-drop-down />
@@ -38,7 +36,6 @@
 
 <script>
 import I18n                 from "./components/I18n.vue"
-import SearchBar            from "./components/SearchBar.vue"
 import CartDropDown         from "./components/CartDropDown.vue"
 import NotificationDropDown from "./components/NotificationDropDown.vue"
 import ProfileDropDown      from "./components/ProfileDropDown.vue"
@@ -56,7 +53,6 @@ export default {
   components: {
     Logo,
     I18n,
-    SearchBar,
     CartDropDown,
     NotificationDropDown,
     ProfileDropDown,

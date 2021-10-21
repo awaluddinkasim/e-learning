@@ -25,15 +25,8 @@ Vue.prototype.$http = axios
 // API Calls
 import "./http/requests"
 
-// mock
-import "./fake-db/index.js"
-
 // Theme Configurations
 import '../themeConfig.js'
-
-
-// Firebase
-import '@/firebase/firebaseConfig'
 
 
 // Auth0 Plugin
@@ -71,7 +64,6 @@ import i18n from './i18n/i18n'
 
 // Vuexy Admin Filters
 import './filters/filters'
-
 
 // Clipboard
 import VueClipboard from 'vue-clipboard2'
