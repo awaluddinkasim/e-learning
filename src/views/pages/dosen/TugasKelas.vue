@@ -1,77 +1,100 @@
-
 <template>
-    <div id="knowledge-base-page">
-        <!-- KNOWLEDGE BASE CARDS  -->
-        <div class="vx-row">
-                <div class="vx-col w-full md:w-1/3 sm:w-1/2 mb-base" v-for="item in filteredKB" :key="item.id" @click="$router.push(item.url).catch(() => {})">
-                    <vx-card class="text-center cursor-pointer">
-                        <img :src="item.graphic" alt="graphic" width="180" class="mx-auto mb-4">
-                        <h4 class="mb-2">{{ item.title.toUpperCase() }}</h4>
-                        <small>{{ item.description }}</small>
-                    </vx-card>
-                </div>
-            </div>
-    </div>
+  <div id="daftar-tugas">
+    <vs-button
+      icon-pack="feather"
+      icon="icon-plus"
+      class="my-3"
+      @click="toggleBuatTugas"
+      >Buat Tugas</vs-button
+    >
+
+    <Modal v-if="showBuatTugas" @close="toggleBuatTugas">
+      <h6>Form Kelas</h6>
+      <vs-input
+        label="Judul"
+        placeholder=""
+        v-model="formTugas.judul"
+        size="large"
+        class="w-full mt-6"
+      />
+      <vs-textarea
+        v-model="formTugas.deskripsi"
+        label="Deskripsi"
+        class="w-full mt-6"
+      />
+      <div class="flex flex-wrap justify-end my-3">
+        <vs-button @click="uploadTugas">Buat</vs-button>
+      </div>
+    </Modal>
+
+    <template v-if="dataKelas">
+      <vx-card
+        v-for="item in dataKelas.daftar_tugas"
+        :key="item.id"
+        :title="item.nama_tugas"
+        class="mb-5"
+      >
+        <p class="mb-3 px-3">
+          {{ item.deskripsi }}
+        </p>
+
+        <vs-row>
+          <vs-col vs-type="flex" vs-align="center" vs-w="6">
+            <small class="italic">Ditugaskan pada: {{ item.created_at }}</small>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="end" vs-align="center" vs-w="6">
+            <span
+              >Tugas terkumpul: <b>{{ item.tugas_masuk.length }}</b></span
+            >
+          </vs-col>
+        </vs-row>
+      </vx-card>
+    </template>
+  </div>
 </template>
 
 <script>
+import Modal from "../../../layouts/components/modal/Modal.vue";
+import axios from "@/axios.js";
 
-export default{
-    data() {
-        return {
-            knowledgeBaseSearchQuery: '',
-            kb: [
-                {
-                  id          : 1,
-                  title       : 'Sales Automation',
-                  description : 'Muffin lemon drops chocolate carrot cake chocolate bar sweet roll.',
-                  graphic     : require("@/assets/images/pages/graphic-1.png"),
-                  url         : '/pages/knowledge-base/category'
-                },
-                {
-                  id          : 2,
-                  title       : 'Marketing Automation',
-                  description : 'Gingerbread sesame snaps wafer soufflé. Macaroon brownie ice cream',
-                  graphic     : require("@/assets/images/pages/graphic-2.png"),
-                  url         : '/pages/knowledge-base/category'
-                },
-                {
-                  id          : 3,
-                  title       : 'Marketing BI',
-                  description : 'cotton candy caramels danish chocolate cake pie candy. Lemon drops tart.',
-                  graphic     : require("@/assets/images/pages/graphic-3.png"),
-                  url         : '/pages/knowledge-base/category'
-                },
-                {
-                  id          : 4,
-                  title       : 'Personalization',
-                  description : 'Pudding oat cake carrot cake lemon drops gummies marshmallow.',
-                  graphic     : require("@/assets/images/pages/graphic-4.png"),
-                  url         : '/pages/knowledge-base/category'
-                },
-                {
-                  id          : 5,
-                  title       : 'Email Marketing',
-                  description : 'Gummi bears pudding icing sweet caramels chocolate',
-                  graphic     : require("@/assets/images/pages/graphic-5.png"),
-                  url         : '/pages/knowledge-base/category'
-                },
-                {
-                  id          : 6,
-                  title       : 'Demand Generation',
-                  description : 'Dragée jelly beans candy canes pudding cake wafer. Muffin croissant.',
-                  graphic     : require("@/assets/images/pages/graphic-6.png"),
-                  url         : '/pages/knowledge-base/category'
-                },
-            ]
-        }
+export default {
+  data() {
+    return {
+      kode: this.$route.params.kode,
+      formTugas: {
+        judul: "",
+        deskripsi: "",
+        kode: ""
+      },
+      dataKelas: "",
+      showBuatTugas: false
+    };
+  },
+  created() {
+    this.fetchDetail();
+    this.formTugas.kode = this.kode;
+  },
+  methods: {
+    async fetchDetail() {
+      let data = await axios.get("dosen/kelas/data/" + this.kode);
+      this.dataKelas = data.data.detail;
+      console.log(this.dataKelas);
     },
-    computed: {
-        filteredKB() {
-            return this.kb.filter((item) => item.title.toLowerCase().includes(this.knowledgeBaseSearchQuery.toLowerCase()) || item.description.toLowerCase().includes(this.knowledgeBaseSearchQuery.toLowerCase()));
-        }
+    toggleBuatTugas() {
+      this.showBuatTugas = !this.showBuatTugas;
     },
-    methods: {},
-    components: {}
-}
+    async uploadTugas() {
+      this.$vs.loading();
+      let tugas = await axios.post("dosen/tugas", this.formTugas);
+      if (tugas.status == 200) {
+        this.fetchDetail();
+        this.toggleBuatTugas();
+        this.$vs.loading.close();
+      }
+    }
+  },
+  components: {
+    Modal
+  }
+};
 </script>

@@ -25,9 +25,11 @@ Vue.prototype.$http = axios
 // API Calls
 import "./http/requests"
 
+// mock
+import "./fake-db/index.js"
+
 // Theme Configurations
 import '../themeConfig.js'
-
 
 // Auth0 Plugin
 import AuthPlugin from "./plugins/auth";
@@ -64,6 +66,7 @@ import i18n from './i18n/i18n'
 
 // Vuexy Admin Filters
 import './filters/filters'
+
 
 // Clipboard
 import VueClipboard from 'vue-clipboard2'
@@ -129,7 +132,8 @@ store.subscribe((mutations) => {
 
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = 'http://e-learning.com/api'
+// axios.defaults.baseURL = 'http://e-learning.com/api/'
+axios.defaults.baseURL = 'https://backend.e-learning21.my.id/api'
 
 store.commit('auth/SET_AUTH', JSON.parse(localStorage.getItem('userCredentials')))
 

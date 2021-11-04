@@ -10,6 +10,12 @@
 import axios from "@/axios.js"
 
 export default {
+  fetchDosen({ commit }) {
+    axios.get('/admin/users/dosen').then((response) => {
+      commit('SET_CONTACTS_DOSEN', response.data.users)
+    })
+  },
+
     setChatSearchQuery({ commit }, query){
         commit('SET_CHAT_SEARCH_QUERY', query)
     },

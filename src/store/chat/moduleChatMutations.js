@@ -11,6 +11,9 @@
 import Vue from 'vue'
 
 export default {
+  SET_CONTACTS_DOSEN(state, obj) {
+    state.contactsDosen = obj
+  },
   UPDATE_ABOUT_CHAT(state, obj) {
     obj.rootState.AppActiveUser.about = obj.value
   },

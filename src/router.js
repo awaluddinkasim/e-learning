@@ -63,6 +63,46 @@ const router = new Router({
                         rule: 'editor',
                     }
                 },
+                {
+                    path: '/user/kelas/:kode',
+                    name: 'kelas-user',
+                    component: () => import('./views/pages/user/KelasDetail.vue'),
+                    meta: {
+                        rule: 'editor',
+                    }
+                },
+                {
+                    path: '/user/kelas/:kode/materi',
+                    name: 'materi-user',
+                    component: () => import('./views/pages/user/Materi.vue'),
+                    meta: {
+                        rule: 'editor',
+                    }
+                },
+                {
+                    path: '/user/kelas/:kode/tugas',
+                    name: 'tugas-user',
+                    component: () => import('./views/pages/user/Tugas.vue'),
+                    meta: {
+                        rule: 'editor',
+                    }
+                },
+                {
+                    path: '/user/kelas/:kode/kuis',
+                    name: 'kuis-user',
+                    component: () => import('./views/pages/user/Kuis.vue'),
+                    meta: {
+                        rule: 'editor',
+                    }
+                },
+                {
+                    path: '/user/conference',
+                    name: 'conference-user',
+                    component: () => import('./views/pages/user/conference/Kelas.vue'),
+                    meta: {
+                        rule: 'editor',
+                    }
+                },
 
 
         // =============================================================================
@@ -280,9 +320,49 @@ const router = new Router({
                 }
             },
             {
-                path: '/dosen/tugas-masuk',
-                name: 'tugas-dosen',
+                path: '/dosen/kelas/:kode',
+                name: 'detail-kelas-dosen',
+                component: () => import('./views/pages/dosen/KelasDetail.vue'),
+                meta: {
+                    rule: 'editor',
+                }
+            },
+            {
+                path: '/dosen/kelas/:kode/tugas',
+                name: 'daftar-tugas-dosen',
                 component: () => import('./views/pages/dosen/TugasKelas.vue'),
+                meta: {
+                    rule: 'editor',
+                }
+            },
+            {
+                path: '/dosen/kelas/:kode/materi',
+                name: 'daftar-materi-dosen',
+                component: () => import('./views/pages/dosen/Materi.vue'),
+                meta: {
+                    rule: 'editor',
+                }
+            },
+            {
+                path: '/dosen/kelas/:kode/kuis',
+                name: 'daftar-kuis-dosen',
+                component: () => import('./views/pages/dosen/Kuis.vue'),
+                meta: {
+                    rule: 'editor',
+                }
+            },
+            {
+                path: '/dosen/tugas-masuk',
+                name: 'tugas-masuk-dosen',
+                component: () => import('./views/pages/dosen/tugasMasuk/Kelas.vue'),
+                meta: {
+                    rule: 'editor',
+                }
+            },
+            {
+                path: '/dosen/tugas-masuk/:kode',
+                name: 'tugas-masuk-dosen',
+                component: () => import('./views/pages/dosen/tugasMasuk/Tugas.vue'),
                 meta: {
                     rule: 'editor',
                 }
@@ -328,14 +408,6 @@ const router = new Router({
                     rule: 'editor',
                 }
             },
-            {
-              path: '/admin/chat',
-              name: 'admin-chat',
-              component: () => import('./views/apps/chat/Chat.vue'),
-              meta: {
-                  rule: 'editor',
-              }
-          },
           ],
         },
     // =============================================================================
@@ -385,6 +457,22 @@ const router = new Router({
             path: '',
             component: () => import('@/layouts/full-page/FullPage.vue'),
             children: [
+                {
+                    path: '/dosen/kelas/:kode/conference',
+                    name: 'video-conference-dosen',
+                    component: () => import('./views/pages/dosen/VidConference.vue'),
+                    meta: {
+                        rule: 'editor'
+                    }
+                },
+                {
+                    path: '/user/conference/:kode',
+                    name: 'video-conference-user',
+                    component: () => import('./views/pages/user/conference/VidConference.vue'),
+                    meta: {
+                        rule: 'editor',
+                    }
+                },
                 {
                     path: '/pages/forgot-password',
                     name: 'page-forgot-password',

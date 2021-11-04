@@ -1,5 +1,4 @@
 
-
 const menuUser =  [
   {
     url: '/user/dashboard',
@@ -14,18 +13,11 @@ const menuUser =  [
     i18n: "Menu",
     items: [
       {
-        url: "/apps/email",
+        url: "/user/kelas",
         name: "Kelas",
-        slug: "email",
+        slug: "kelas",
         icon: "BookIcon",
         i18n: "Kelas",
-      },
-      {
-        url: "/apps/user/user-list",
-        name: "Tugas",
-        slug: "app-user-list",
-        icon: "CheckSquareIcon",
-        i18n: "Tugas",
       },
       {
         url: null,
@@ -34,13 +26,7 @@ const menuUser =  [
         i18n: "Media",
         submenu: [
           {
-            url: '/apps/chat',
-            name: "Chat",
-            slug: "chat",
-            i18n: "Chat",
-          },
-          {
-            url: '/apps/user/user-view/268',
+            url: '/user/conference',
             name: "Video Conference",
             slug: "app-user-view",
             i18n: "Video Conference",
@@ -81,13 +67,6 @@ const menuDosen =  [
         icon: "CheckSquareIcon",
         i18n: "Tugas Masuk",
       },
-      {
-        url: "/dosen/chat",
-        name: "Chat",
-        slug: "app-user-list",
-        icon: "MessageCircleIcon",
-        i18n: "Chat",
-      },
     ]
   },
 ]
@@ -120,13 +99,6 @@ const menuAdmin =  [
         slug: "mahasiswa",
         icon: "UsersIcon",
         i18n: "Mahasiswa",
-      },
-      {
-        url: "/admin/chat",
-        name: "Chat",
-        slug: "chat",
-        icon: "MessageCircleIcon",
-        i18n: "Chat",
       },
     ]
   },

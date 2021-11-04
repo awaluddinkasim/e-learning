@@ -14,6 +14,7 @@ export default {
   chatSearchQuery: "",
 
   // Stores All Contacts
+  contactsDosen: [],
   contacts: [],
 
   // Stores Chat Contacts
