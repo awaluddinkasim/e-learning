@@ -1,4 +1,4 @@
-import axios from "../../http/axios/index.js"
+import axios from "@/axios.js"
 
 export default {
   async signInUser({ commit }, credentials) {

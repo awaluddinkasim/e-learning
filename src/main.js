@@ -1,11 +1,4 @@
-/*=========================================================================================
-  File Name: main.js
-  Description: main vue(js) file
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
+
 
 
 import Vue from 'vue'
@@ -21,9 +14,6 @@ Vue.use(Vuesax)
 // axios
 import axios from "./axios.js"
 Vue.prototype.$http = axios
-
-// API Calls
-import "./http/requests"
 
 // Theme Configurations
 import '../themeConfig.js'
@@ -129,8 +119,8 @@ store.subscribe((mutations) => {
 
 Vue.config.productionTip = false
 
-// axios.defaults.baseURL = 'http://e-learning.com/api/'
-axios.defaults.baseURL = 'https://backend.e-learning21.my.id/api'
+axios.defaults.baseURL = 'http://e-learning.com/api/'
+// axios.defaults.baseURL = 'https://backend.e-learning21.my.id/api'
 
 store.commit('auth/SET_AUTH', JSON.parse(localStorage.getItem('userCredentials')))
 
