@@ -48,6 +48,7 @@ export default {
       this.daftarKelas = dataKelas.data.daftarKelas
     },
     openVideoConference(kode) {
+      // console.log(kode)
       let routeData = this.$router.resolve({name: 'video-conference-user', params: {kode: kode}});
       window.open(routeData.href, '_blank')
     }

@@ -16,9 +16,7 @@
             <small class="italic">Ditugaskan pada: {{ item.created_at }}</small>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="end" vs-align="center" vs-w="6">
-            <span
-              >Tugas terkumpul: <b>{{ item.tugas_masuk.length }}</b></span
-            >
+            <vs-button @click="$router.push({ name: 'upload-tugas-user', params: { kode: kode, id: item.id } })">Upload Assignment</vs-button>
           </vs-col>
         </vs-row>
       </vx-card>

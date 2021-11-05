@@ -16,7 +16,8 @@
             <small class="italic">Dibuat pada: {{ item.created_at }}</small>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="end" vs-align="center" vs-w="6">
-            <vs-button>Download File</vs-button>
+            <vs-button class="mr-1">Download Soal</vs-button>
+            <vs-button>Upload Jawaban</vs-button>
           </vs-col>
         </vs-row>
       </vx-card>
@@ -33,7 +34,7 @@ export default {
       formMateri: {
         judul: "",
         instruksi: "",
-        file: ""
+        file: "",
       },
       kode: this.$route.params.kode,
       daftarKuis: "",

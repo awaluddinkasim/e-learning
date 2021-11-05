@@ -7,14 +7,24 @@
         :title="item.nama_tugas"
         class="mb-5"
       >
-
         <vs-row>
           <vs-col vs-type="flex" vs-align="center" vs-w="6">
             <small class="italic">Ditugaskan pada: {{ item.created_at }}</small>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="end" vs-align="center" vs-w="6">
             <span
-              >Tugas terkumpul: <b>{{ item.tugas_masuk.length }}</b> <vs-button class="ml-4" size="small">Detail</vs-button></span
+              >Tugas terkumpul: <b>{{ item.tugas_masuk.length }}</b>
+              <vs-button
+                class="ml-4"
+                size="small"
+                @click="
+                  $router.push({
+                    name: 'list-tugas-masuk-dosen',
+                    params: { kode: kode, id: item.id }
+                  })
+                "
+                >Detail</vs-button
+              ></span
             >
           </vs-col>
         </vs-row>
@@ -61,6 +71,6 @@ export default {
         this.$vs.loading.close();
       }
     }
-  },
+  }
 };
 </script>

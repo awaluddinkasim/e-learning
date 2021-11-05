@@ -19,12 +19,12 @@ import Twilio, {
   connect,
   createLocalTracks,
   createLocalVideoTrack
-} from "twilio-video";
+} from "twilio-video"
 
 export default {
   data() {
     return {
-      kode: "y5bSaRc",
+      kode: this.$route.params.kode,
       data: {},
       localTrack: false,
       remoteTrack: "",
@@ -77,11 +77,14 @@ export default {
 
     // Create a new chat
     createChat(room_name) {
+      console.log(room_name)
       const VueThis = this;
 
       this.getAccessToken().then(data => {
         VueThis.roomName = null;
         const token = data.data.token;
+
+        console.log(token)
         let connectOptions = {
           name: room_name,
           // logLevel: 'debug',
@@ -96,7 +99,8 @@ export default {
         document.getElementById("video-chat-window").innerHTML = "";
 
         Twilio.connect(token, connectOptions).then(function(room) {
-          this.message = 'Successfully joined a Room: ', room;
+          VueThis.message = 'Successfully joined a Room: ' + room_name;
+          console.log(room.participants)
 
           // set active toom
           VueThis.activeRoom = room;
@@ -104,6 +108,7 @@ export default {
 
           // Attach the Tracks of all the remote Participants.
           room.participants.forEach(function(participant) {
+            console.log(participant)
             let previewContainer = document.getElementById("video-chat-window");
             VueThis.attachParticipantTracks(participant, previewContainer);
           });
@@ -145,16 +150,16 @@ export default {
     }
   },
   created() {
+    this.message = 'Loading...';
     this.createChat(this.kode);
-    this.message = "Loading..."
     window.addEventListener("beforeunload", this.leaveRoomIfJoined);
   }
 };
 </script>
 
 <style>
-#video-chat-window video {
+#my-video-chat-window video {
   width: 33%;
-  padding: 0px 10px;
+  padding: 0px;
 }
 </style>
