@@ -26,7 +26,7 @@
 
           <vs-td :data="data[indextr].id" align="center">
             <!-- {{ data[indextr].id }} -->
-            <vs-button size="small">Download</vs-button>
+            <vs-button size="small" @click="download(data[indextr].id)">Download</vs-button>
           </vs-td>
 
         </vs-tr>
@@ -48,6 +48,9 @@ export default {
 
   },
   methods: {
+    download(id) {
+      window.open(axios.defaults.baseURL + 'download/tugas-masuk/' + id)
+    },
     async fetchTugas() {
       let tugas = await axios.get('dosen/tugas-masuk/' + this.kode + '/' + this.idTugas)
       this.daftarTugas = tugas.data.daftarTugas
