@@ -16,7 +16,7 @@
           <small class="italic">Dibuat pada: {{ item.created_at }}</small>
         </vs-col>
         <vs-col vs-type="flex" vs-justify="end" vs-align="center" vs-w="6">
-          <vs-button>Download Materi</vs-button>
+          <vs-button @click="download(item.id)">Download Materi</vs-button>
         </vs-col>
       </vs-row>
     </vx-card>
@@ -44,6 +44,9 @@ export default {
     this.fetchDetail();
   },
   methods: {
+    download(id) {
+      window.open(axios.defaults.baseURL + 'download/materi/' + id)
+    },
     async fetchDetail() {
       let data = await axios.get("materi/" + this.kode);
       this.daftarMateri = data.data.daftarMateri;

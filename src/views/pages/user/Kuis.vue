@@ -16,7 +16,7 @@
             <small class="italic">Dibuat pada: {{ item.created_at }}</small>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="end" vs-align="center" vs-w="6">
-            <vs-button class="mr-1">Download Soal</vs-button>
+            <vs-button class="mr-1" @click="download(item.id)">Download Soal</vs-button>
             <vs-button @click="$router.push({ name: 'kuis-jawaban-user', params: { kode: kode, id: item.id } })">Upload Jawaban</vs-button>
           </vs-col>
         </vs-row>
@@ -45,6 +45,9 @@ export default {
     this.fetchDetail();
   },
   methods: {
+    download(id) {
+      window.open(axios.defaults.baseURL + 'download/kuis/' + id)
+    },
     async fetchDetail() {
       let data = await axios.get("kuis/" + this.kode);
       this.daftarKuis = data.data.daftarKuis;
