@@ -17,7 +17,7 @@
           </vs-col>
           <vs-col vs-type="flex" vs-justify="end" vs-align="center" vs-w="6">
             <vs-button class="mr-1">Download Soal</vs-button>
-            <vs-button>Upload Jawaban</vs-button>
+            <vs-button @click="$router.push({ name: 'kuis-jawaban-user', params: { kode: kode, id: item.id } })">Upload Jawaban</vs-button>
           </vs-col>
         </vs-row>
       </vx-card>

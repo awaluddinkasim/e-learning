@@ -9,94 +9,129 @@
 
 <template>
   <div id="page-user-edit">
-
-    <vs-alert color="danger" title="User Not Found" :active.sync="user_not_found">
-      <span>User record with id: {{ $route.params.userId }} not found. </span>
-      <span>
-        <span>Check </span><router-link :to="{name:'page-user-list'}" class="text-inherit underline">All Users</router-link>
-      </span>
-    </vs-alert>
-
-    <vx-card v-if="user_data">
-
-      <div slot="no-body" class="tabs-container px-6 pt-6">
-
-        <vs-tabs v-model="activeTab" class="tab-action-btn-fill-conatiner">
-          <vs-tab label="Account" icon-pack="feather" icon="icon-user">
-            <div class="tab-text">
-              <user-edit-tab-account class="mt-4" :data="user_data" />
-            </div>
-          </vs-tab>
-          <vs-tab label="Information" icon-pack="feather" icon="icon-info">
-            <div class="tab-text">
-              <user-edit-tab-information class="mt-4" :data="user_data" />
-            </div>
-          </vs-tab>
-          <vs-tab label="Social" icon-pack="feather" icon="icon-share-2">
-            <div class="tab-text">
-              <user-edit-tab-social class="mt-4" :data="user_data" />
-            </div>
-          </vs-tab>
-        </vs-tabs>
-
+    <vx-card title="Edit Mahasiswa">
+      <div class="vx-row">
+        <div class="vx-col sm:w-1/2 w-full mb-2">
+          <div class="vx-col w-full">
+            <vs-input class="w-full" label="Username" v-model="form.username" />
+          </div>
+        </div>
+        <div class="vx-col sm:w-1/2 w-full mb-2">
+          <div class="vx-col w-full">
+            <vs-select
+              v-model="form.prodi"
+              class="w-full"
+              label="Program Studi"
+            >
+              <vs-select-item
+                :key="index"
+                :value="item.value"
+                :text="item.text"
+                v-for="(item, index) in daftarProdi"
+                class="w-full"
+              />
+            </vs-select>
+          </div>
+        </div>
       </div>
-
+      <div class="vx-row">
+        <div class="vx-col sm:w-1/2 w-full mb-2">
+          <div class="vx-col w-full">
+            <vs-input class="w-full" label="Nama Lengkap" v-model="form.name" />
+          </div>
+        </div>
+        <div class="vx-col sm:w-1/2 w-full mb-2">
+          <vs-select
+            v-model="form.jk"
+            class="w-full"
+            label="Jenis Kelamin"
+          >
+            <vs-select-item value="L" text="Laki-laki" />
+            <vs-select-item value="P" text="Perempuan" />
+          </vs-select>
+        </div>
+      </div>
+      <div class="vx-row">
+        <div class="vx-col sm:w-1/2 w-full mb-2">
+          <div class="vx-col w-full">
+            <vs-input class="w-full" label="Password" type="password" v-model="form.password" />
+            <small>* Kosongkan jika tidak ingin mengganti</small>
+          </div>
+        </div>
+      </div>
+      <div class="vx-row">
+    <div class="vx-col w-full">
+      <vs-button class="mr-3 mt-5" @click="simpanData">Simpan</vs-button>
+    </div>
+  </div>
     </vx-card>
   </div>
 </template>
 
 <script>
-import UserEditTabAccount     from "./UserEditTabAccount.vue"
-import UserEditTabInformation from "./UserEditTabInformation.vue"
-import UserEditTabSocial      from "./UserEditTabSocial.vue"
-
-// Store Module
-// import moduleUserManagement from '@/store/user-management/moduleUserManagement.js'
+import axios from '@/axios.js'
 
 export default {
-  components: {
-    UserEditTabAccount,
-    UserEditTabInformation,
-    UserEditTabSocial,
-  },
   data() {
     return {
-      user_data: null,
-      user_not_found: false,
-
-      /*
-        This property is created for fetching latest data from API when tab is changed
-
-        Please check it's watcher
-      */
-      activeTab: 0,
-    }
-  },
-  watch: {
-    activeTab() {
-      this.fetch_user_data(this.$route.params.userId)
-    }
+      id: this.$route.params.id,
+      form: {
+        username: "",
+        name: "",
+        password: "",
+        prodi: "",
+        jk: ""
+      },
+      daftarProdi: [
+        // teknik
+        {
+          index: 0,
+          text: "Teknik Informatika",
+          value: "Teknik Informatika"
+        },
+        {
+          index: 1,
+          text: "Teknik Mesin",
+          value: "Teknik Mesin"
+        },
+        {
+          index: 2,
+          text: "Teknik Industri",
+          value: "Teknik Industri"
+        },
+        {
+          index: 3,
+          text: "Teknik Elektro",
+          value: "Teknik Elektro"
+        },
+        {
+          index: 4,
+          text: "Teknik Sipil",
+          value: "Teknik Sipil"
+        }
+      ],
+    };
   },
   methods: {
-    fetch_user_data(userId) {
-      this.$store.dispatch("userManagement/fetchUser", userId)
-        .then(res => { this.user_data = res.data })
-        .catch(err => {
-          if(err.response.status === 404) {
-            this.user_not_found = true
-            return
-          }
-          console.error(err) })
+    async fetchUser() {
+      let user = await axios.get('admin/user/user/' + this.id)
+      console.log(user.data)
+      if (user.data.user) {
+        this.form.username = user.data.user.username
+        this.form.name = user.data.user.name
+        this.form.prodi = user.data.user.prodi
+        this.form.jk = user.data.user.jk
+      }
+    },
+    async simpanData() {
+      let update = await axios.put('admin/user/user/' + this.id, this.form)
+      if (update.status == 200) {
+        this.$router.push({ name: 'admin-daftar-mahasiswa' })
+      }
     }
   },
   created() {
-    // Register Module UserManagement Module
-    // if(!moduleUserManagement.isRegistered) {
-    //   this.$store.registerModule('userManagement', moduleUserManagement)
-    //   moduleUserManagement.isRegistered = true
-    // }
-    this.fetch_user_data(this.$route.params.userId)
+    this.fetchUser()
   }
-}
-
+};
 </script>

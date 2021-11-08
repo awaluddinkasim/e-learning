@@ -1,4 +1,3 @@
-
 <template>
   <div id="page-user-list">
     <div class="vx-card p-6">
@@ -38,6 +37,24 @@
               class="w-full"
               type="password"
             />
+          </div>
+        </div>
+
+        <div class="vx-row">
+          <div class="vx-col w-full">
+            <vs-select
+              v-model="addForm.prodi"
+              class="w-full select-large mt-5"
+              label="Program Studi"
+            >
+              <vs-select-item
+                :key="index"
+                :value="item.value"
+                :text="item.text"
+                v-for="(item, index) in daftarProdi"
+                class="w-full"
+              />
+            </vs-select>
           </div>
         </div>
 
@@ -169,8 +186,38 @@ export default {
         username: "",
         name: "",
         password: "",
+        prodi: "",
         jk: ""
       },
+
+      daftarProdi: [
+        // teknik
+        {
+          index: 0,
+          text: "Teknik Informatika",
+          value: "Teknik Informatika"
+        },
+        {
+          index: 1,
+          text: "Teknik Mesin",
+          value: "Teknik Mesin"
+        },
+        {
+          index: 2,
+          text: "Teknik Industri",
+          value: "Teknik Industri"
+        },
+        {
+          index: 3,
+          text: "Teknik Elektro",
+          value: "Teknik Elektro"
+        },
+        {
+          index: 4,
+          text: "Teknik Sipil",
+          value: "Teknik Sipil"
+        }
+      ],
 
       searchQuery: "",
       showAddUser: false,
@@ -187,25 +234,30 @@ export default {
         {
           headerName: "Username",
           field: "username",
-          width: 250,
+          width: 190,
           filter: true
         },
         {
           headerName: "Nama Lengkap",
           field: "name",
           filter: true,
-          width: 350
+          width: 280
         },
         {
           headerName: "L/P",
           field: "jk",
           filter: true,
-          width: 150
+          width: 100
+        },
+        {
+          headerName: "Program Studi",
+          field: "prodi",
+          filter: true
         },
         {
           headerName: "",
-          cellRendererFramework: 'CellRendererActions',
-        },
+          cellRendererFramework: "CellRendererActions"
+        }
       ],
 
       // Cell Renderer Components
@@ -228,7 +280,7 @@ export default {
     },
     departmentFilter(obj) {
       this.setColumnFilter("department", obj.value);
-    },
+    }
   },
   computed: {
     ...mapGetters({

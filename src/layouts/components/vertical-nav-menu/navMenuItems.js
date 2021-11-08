@@ -61,11 +61,24 @@ const menuDosen =  [
         i18n: "Kelas",
       },
       {
-        url: "/dosen/tugas-masuk",
+        url: null,
         name: "Tugas Masuk",
-        slug: "app-user-list",
         icon: "CheckSquareIcon",
         i18n: "Tugas Masuk",
+        submenu: [
+          {
+            url: '/dosen/kuis',
+            name: "Kuis",
+            slug: "app-user-view",
+            i18n: "Kuis",
+          },
+          {
+            url: '/dosen/tugas-masuk',
+            name: "Tugas Masuk",
+            slug: "app-user-view",
+            i18n: "Tugas Masuk",
+          },
+        ]
       },
     ]
   },

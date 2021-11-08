@@ -1,6 +1,6 @@
 <template>
     <div class="text-center">
-      <feather-icon icon="Edit3Icon" svgClasses="h-5 w-5 mr-4 hover:text-primary cursor-pointer" @click="editRecord" />
+      <feather-icon icon="Edit3Icon" svgClasses="h-5 w-5 mr-4 hover:text-primary cursor-pointer" @click="edit" />
       <feather-icon icon="Trash2Icon" svgClasses="h-5 w-5 hover:text-danger cursor-pointer" @click="confirmDeleteRecord" />
     </div>
 </template>
@@ -17,7 +17,6 @@ import { mapActions } from 'vuex'
               username: this.params.data.username,
               name: this.params.data.name,
               jk: this.params.data.jk,
-              fakultas: this.params.data.fakultas,
               prodi: this.params.data.prodi,
             }
           }
@@ -27,8 +26,8 @@ import { mapActions } from 'vuex'
             deleteUser: 'userManagement/deleteUser',
             fetchUsers: 'userManagement/fetchUsers'
           }),
-          editRecord() {
-            this.$router.push("/apps/user/user-edit/" + 268).catch(() => {})
+          edit() {
+            this.$router.push("/admin/dosen/" + this.params.data.id).catch(() => {})
 
             /*
               Below line will be for actual product

@@ -87,6 +87,14 @@ const router = new Router({
                     }
                 },
                 {
+                    path: '/user/kelas/:kode/kuis/:id',
+                    name: 'kuis-jawaban-user',
+                    component: () => import('./views/pages/user/KuisJawaban.vue'),
+                    meta: {
+                        rule: 'editor',
+                    }
+                },
+                {
                     path: '/user/conference',
                     name: 'conference-user',
                     component: () => import('./views/pages/user/conference/Kelas.vue'),
@@ -159,6 +167,30 @@ const router = new Router({
                 }
             },
             {
+                path: '/dosen/kuis',
+                name: 'kuis-masuk-dosen',
+                component: () => import('./views/pages/dosen/kuis/Kelas.vue'),
+                meta: {
+                    rule: 'editor',
+                }
+            },
+            {
+                path: '/dosen/kuis/:kode',
+                name: 'data-kuis-masuk-dosen',
+                component: () => import('./views/pages/dosen/kuis/Kuis.vue'),
+                meta: {
+                    rule: 'editor',
+                }
+            },
+            {
+                path: '/dosen/kuis/:kode/:id',
+                name: 'list-kuis-masuk-dosen',
+                component: () => import('./views/pages/dosen/kuis/ListKuis.vue'),
+                meta: {
+                    rule: 'editor',
+                }
+            },
+            {
                 path: '/dosen/tugas-masuk',
                 name: 'tugas-masuk-dosen',
                 component: () => import('./views/pages/dosen/tugasMasuk/Kelas.vue'),
@@ -168,7 +200,7 @@ const router = new Router({
             },
             {
                 path: '/dosen/tugas-masuk/:kode',
-                name: 'daa-tugas-masuk-dosen',
+                name: 'data-tugas-masuk-dosen',
                 component: () => import('./views/pages/dosen/tugasMasuk/Tugas.vue'),
                 meta: {
                     rule: 'editor',
@@ -216,9 +248,25 @@ const router = new Router({
                 }
             },
             {
+                path: '/admin/dosen/:id',
+                name: 'admin-dosen-edit',
+                component: () => import('./views/pages/admin/dosen/user-edit/UserEdit.vue'),
+                meta: {
+                    rule: 'editor',
+                }
+            },
+            {
                 path: '/admin/mahasiswa',
                 name: 'admin-daftar-mahasiswa',
                 component: () => import('./views/pages/admin/mahasiswa/user-list/UserList.vue'),
+                meta: {
+                    rule: 'editor',
+                }
+            },
+            {
+                path: '/admin/mahasiswa/:id',
+                name: 'admin-mahasiswa-edit',
+                component: () => import('./views/pages/admin/mahasiswa/user-edit/UserEdit.vue'),
                 meta: {
                     rule: 'editor',
                 }

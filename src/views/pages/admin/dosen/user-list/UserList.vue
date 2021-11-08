@@ -76,24 +76,6 @@
               <div class="vx-row">
                 <div class="vx-col w-full">
                   <vs-select
-                    v-model="addForm.fakultas"
-                    class="w-full select-large mt-5"
-                    label="Fakultas"
-                  >
-                    <vs-select-item
-                      :key="index"
-                      :value="item.value"
-                      :text="item.text"
-                      v-for="(item, index) in daftarFakultas"
-                      class="w-full"
-                    />
-                  </vs-select>
-                </div>
-              </div>
-
-              <div class="vx-row">
-                <div class="vx-col w-full">
-                  <vs-select
                     v-model="addForm.prodi"
                     class="w-full select-large mt-5"
                     label="Program Studi"
@@ -102,7 +84,7 @@
                       :key="index"
                       :value="item.value"
                       :text="item.text"
-                      v-for="(item, index) in filteredProdi"
+                      v-for="(item, index) in daftarProdi"
                       class="w-full"
                     />
                   </vs-select>
@@ -225,27 +207,11 @@ export default {
         name: "",
         password: "",
         jk: "",
-        fakultas: "",
         prodi: ""
       },
 
       searchQuery: "",
       showAddUser: false,
-
-      daftarFakultas: [
-        { index: 0, text: "Fakultas Teknik", value: "Teknik" },
-        {
-          index: 1,
-          text: "Fakultas Keguruan dan Ilmu Pendidikan",
-          value: "Keguruan dan Ilmu Pendidikan"
-        },
-        {
-          index: 2,
-          text: "Fakultas Matematika dan Ilmu Pengetahuan Alam",
-          value: "Matematika dan Ilmu Pengetahuan Alam"
-        },
-        { index: 3, text: "Fakultas Pertanian", value: "Pertanian" }
-      ],
 
       daftarProdi: [
         // teknik
@@ -253,59 +219,28 @@ export default {
           index: 0,
           text: "Teknik Informatika",
           value: "Teknik Informatika",
-          fakultas: "Teknik"
         },
         {
           index: 1,
           text: "Teknik Mesin",
           value: "Teknik Mesin",
-          fakultas: "Teknik"
         },
         {
           index: 2,
           text: "Teknik Industri",
           value: "Teknik Industri",
-          fakultas: "Teknik"
         },
         {
           index: 3,
           text: "Teknik Elektro",
           value: "Teknik Elektro",
-          fakultas: "Teknik"
         },
         {
           index: 4,
           text: "Teknik Sipil",
           value: "Teknik Sipil",
-          fakultas: "Teknik"
         },
-        // mipa
-        { index: 5, text: "Farmasi", value: "Farmasi", fakultas: "Matematika dan Ilmu Pengetahuan Alam" },
-        { index: 6, text: "Kimia", value: "Kimia", fakultas: "Matematika dan Ilmu Pengetahuan Alam" },
-        // fkip
-        { index: 7, text: "PGSD", value: "PGSD", fakultas: "Keguruan dan Ilmu Pendidikan" },
-        {
-          index: 8,
-          text: "Pend. Matematika",
-          value: "Pend. Matematika",
-          fakultas: "Keguruan dan Ilmu Pendidikan"
-        },
-        // faperta
-        {
-          index: 9,
-          text: "Agroteknologi",
-          value: "Agroteknologi",
-          fakultas: "Pertanian"
-        },
-        {
-          index: 10,
-          text: "Agribisnis",
-          value: "Agribisnis",
-          fakultas: "Pertanian"
-        }
       ],
-
-      filteredProdi: [],
 
       // AgGrid
       gridApi: null,
@@ -333,12 +268,6 @@ export default {
           field: "jk",
           filter: true,
           width: 100
-        },
-        {
-          headerName: "Fakultas",
-          field: "fakultas",
-          filter: true,
-          width: 200
         },
         {
           headerName: "Program Studi",
@@ -371,16 +300,6 @@ export default {
     },
     departmentFilter(obj) {
       this.setColumnFilter("department", obj.value);
-    },
-    "addForm.fakultas": {
-      handler() {
-        let prodi = this.daftarProdi.filter(prodi => {
-          return prodi.fakultas == this.addForm.fakultas;
-        });
-        this.addForm.prodi = "";
-        this.filteredProdi = prodi;
-      },
-      deep: true
     },
   },
   computed: {
