@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     download(id) {
-      window.open(axios.defaults.baseURL + 'download/tugas-masuk/' + id)
+      window.open(axios.defaults.baseURL + '/download/tugas-masuk/' + id)
     },
     async fetchTugas() {
       let tugas = await axios.get('dosen/tugas-masuk/' + this.kode + '/' + this.idTugas)

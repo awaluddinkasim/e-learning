@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     download(id) {
-      window.open(axios.defaults.baseURL + 'download/kuis/' + id)
+      window.open(axios.defaults.baseURL + '/download/kuis/' + id)
     },
     async fetchDetail() {
       let data = await axios.get("kuis/" + this.kode);

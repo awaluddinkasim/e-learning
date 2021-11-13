@@ -102,6 +102,14 @@ const router = new Router({
                         rule: 'editor',
                     }
                 },
+                {
+                    path: '/user/me',
+                    name: 'user-profile',
+                    component: () => import('./views/pages/user/Profile.vue'),
+                    meta: {
+                        rule: 'editor',
+                    }
+                },
             ],
         },
         {
@@ -214,6 +222,14 @@ const router = new Router({
                     rule: 'editor',
                 }
             },
+            {
+                path: '/dosen/me',
+                name: 'dosen-profile',
+                component: () => import('./views/pages/dosen/Profile.vue'),
+                meta: {
+                    rule: 'editor',
+                }
+            },
           ],
         },
 
@@ -267,6 +283,14 @@ const router = new Router({
                 path: '/admin/mahasiswa/:id',
                 name: 'admin-mahasiswa-edit',
                 component: () => import('./views/pages/admin/mahasiswa/user-edit/UserEdit.vue'),
+                meta: {
+                    rule: 'editor',
+                }
+            },
+            {
+                path: '/admin/me',
+                name: 'admin-profile',
+                component: () => import('./views/pages/admin/Profile.vue'),
                 meta: {
                     rule: 'editor',
                 }

@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     download(id) {
-      window.open(axios.defaults.baseURL + 'download/materi/' + id)
+      window.open(axios.defaults.baseURL + '/download/materi/' + id)
     },
     async fetchDetail() {
       let data = await axios.get("dosen/materi/" + this.kode);

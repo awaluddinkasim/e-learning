@@ -194,8 +194,8 @@ export default {
         // teknik
         {
           index: 0,
-          text: "Teknik Informatika",
-          value: "Teknik Informatika"
+          text: "Teknik Pertambangan",
+          value: "Teknik Pertambangan"
         },
         {
           index: 1,
@@ -204,19 +204,9 @@ export default {
         },
         {
           index: 2,
-          text: "Teknik Industri",
-          value: "Teknik Industri"
+          text: "Teknik Informatika",
+          value: "Teknik Informatika"
         },
-        {
-          index: 3,
-          text: "Teknik Elektro",
-          value: "Teknik Elektro"
-        },
-        {
-          index: 4,
-          text: "Teknik Sipil",
-          value: "Teknik Sipil"
-        }
       ],
 
       searchQuery: "",

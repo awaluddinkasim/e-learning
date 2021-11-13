@@ -17,6 +17,7 @@
 
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
+            @click="goToProfile"
             >
             <feather-icon icon="UserIcon" svgClasses="w-4 h-4" />
             <span class="ml-2">Profile</span>
@@ -47,7 +48,8 @@ export default {
   computed: {
     ...mapGetters({
       authenticated: 'auth/authenticated',
-      user: 'auth/userData'
+      user: 'auth/userData',
+      role: 'auth/userRole'
     }),
   },
   methods: {
@@ -62,6 +64,24 @@ export default {
         this.$router.push('/login')
       })
     },
+    goToProfile() {
+      switch (this.role) {
+        case 'admin':
+          this.$router.push({ name: 'admin-profile' })
+          break;
+
+        case 'dosen':
+          this.$router.push({ name: 'dosen-profile' })
+          break;
+
+        case 'user':
+          this.$router.push({ name: 'user-profile' })
+          break;
+
+        default:
+          break;
+      }
+    }
   }
 }
 </script>
