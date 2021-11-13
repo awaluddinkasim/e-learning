@@ -53,7 +53,7 @@
               <small>* Kosongkan jika tidak ingin mengganti password</small>
             </div>
           </div>
-          <vs-button class="bg-primary w-full mt-5" @click="saveData"
+          <vs-button class="bg-primary w-full mt-5" @click="confirmSave"
             >Simpan</vs-button
           >
           <vs-button class="bg-danger w-full mt-2" @click="toggleEdit"
@@ -90,6 +90,15 @@ export default {
       this.formEdit.id = this.userData.id;
       this.formEdit.name = this.userData.name;
       this.formEdit.username = this.userData.username;
+    },
+    confirmSave() {
+      this.$vs.dialog({
+        type: "confirm",
+        title: `Confirm Save`,
+        text: `Anda akan diminta untuk login ulang.`,
+        accept: this.saveData,
+        acceptText: "Lanjutkan"
+      });
     },
     async saveData() {
       this.$vs.loading();

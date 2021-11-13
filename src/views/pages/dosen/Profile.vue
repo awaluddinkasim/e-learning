@@ -92,7 +92,7 @@
               </vs-select>
             </div>
           </div>
-          <vs-button class="bg-primary w-full mt-5" @click="saveData"
+          <vs-button class="bg-primary w-full mt-5" @click="confirmSave"
             >Simpan</vs-button
           >
           <vs-button class="bg-danger w-full mt-2" @click="toggleEdit"
@@ -150,6 +150,15 @@ export default {
       this.formEdit.username = this.userData.username;
       this.formEdit.prodi = this.userData.prodi;
       this.formEdit.jk = this.userData.jk;
+    },
+    confirmSave() {
+      this.$vs.dialog({
+        type: "confirm",
+        title: `Confirm Save`,
+        text: `Anda akan diminta untuk login ulang.`,
+        accept: this.saveData,
+        acceptText: "Lanjutkan"
+      });
     },
     async saveData() {
       this.$vs.loading();
