@@ -14,6 +14,15 @@
                 <input type="file" name="file" id="file" @change="handleFile($event)" :disabled="isCommitted">
               </div>
               <vs-button class="w-full" @click="uploadAssignment" :disabled="isCommitted">{{ isCommitted ? 'Tugas dikirim' : 'Upload' }}</vs-button>
+              <template v-if="isCommitted">
+                <div class="mt-5 text-center" v-if="nilai">
+                  <p>Nilai Anda</p>
+                  <h1>{{ nilai }}</h1>
+                </div>
+                <div class="mt-5 text-center" v-else>
+                  <p>Menunggu penilaian</p>
+                </div>
+              </template>
             </vx-card>
           </div>
         </div>
@@ -36,6 +45,7 @@ export default {
         file: "",
       },
       detailTugas: "",
+      nilai: null,
       isCommitted: false,
     };
   },
@@ -59,6 +69,7 @@ export default {
       let data = await axios.get("tugas/" + this.kode + "/" + this.idTugas + "/" + this.dataUser.id);
       if (data.data.message == "Tugas Ada") {
         this.isCommitted = true
+        this.nilai = data.data.nilai
       }
     },
     handleFile(event) {

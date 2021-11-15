@@ -9,7 +9,7 @@
     >
 
     <Modal v-if="showBuatTugas" @close="toggleBuatTugas">
-      <h6>Form Kelas</h6>
+      <h6>Form Tugas</h6>
       <vs-input
         label="Judul"
         placeholder=""

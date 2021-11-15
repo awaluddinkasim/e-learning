@@ -119,8 +119,8 @@ store.subscribe((mutations) => {
 
 Vue.config.productionTip = false
 
-// axios.defaults.baseURL = 'http://e-learning.com/api/'
-axios.defaults.baseURL = 'https://backend.e-learning21.my.id/api'
+axios.defaults.baseURL = 'http://e-learning.com/api/'
+// axios.defaults.baseURL = 'https://backend.e-learning21.my.id/api'
 
 store.commit('auth/SET_AUTH', JSON.parse(localStorage.getItem('userCredentials')))
 
