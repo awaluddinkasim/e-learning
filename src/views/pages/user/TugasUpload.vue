@@ -9,7 +9,14 @@
             </vx-card>
           </div>
           <div class="w-1/3 px-2">
-            <vx-card class="mb-3">
+            <vx-card class="mb-3" v-if="overdue">
+              <div class="my-3">
+                <input type="file" name="file" id="file" disabled>
+              </div>
+              <vs-button class="w-full" disabled>Upload</vs-button>
+              <p class="mt-5 text-center text-danger text-sm">Batas pengumpulan sudah lewat</p>
+            </vx-card>
+            <vx-card class="mb-3" v-else>
               <div class="my-3">
                 <input type="file" name="file" id="file" @change="handleFile($event)" :disabled="isCommitted">
               </div>
@@ -47,6 +54,7 @@ export default {
       detailTugas: "",
       nilai: null,
       isCommitted: false,
+      overdue: false,
     };
   },
   created() {
@@ -63,6 +71,9 @@ export default {
     async fetchDetail() {
       let data = await axios.get("tugas/" + this.kode + "/" + this.idTugas);
       this.detailTugas = data.data.detailTugas;
+      if (data.data.message == 'telat') {
+        this.overdue = true
+      }
       console.log(data.data);
     },
     async fetchTugas() {

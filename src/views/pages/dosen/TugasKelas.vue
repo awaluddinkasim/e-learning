@@ -22,6 +22,13 @@
         label="Deskripsi"
         class="w-full mt-6"
       />
+      <vs-input
+        label="Batas Kumpul"
+        type="date"
+        v-model="formTugas.deadline"
+        size="large"
+        class="w-full mt-6"
+      />
       <div class="flex flex-wrap justify-end my-3">
         <vs-button @click="uploadTugas">Buat</vs-button>
       </div>
@@ -40,7 +47,7 @@
 
         <vs-row>
           <vs-col vs-type="flex" vs-align="center" vs-w="6">
-            <small class="italic">Ditugaskan pada: {{ item.created_at }}</small>
+            <small class="italic">Batas pengumpulan: {{ item.deadline }}</small>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="end" vs-align="center" vs-w="6">
             <span
@@ -64,6 +71,7 @@ export default {
       formTugas: {
         judul: "",
         deskripsi: "",
+        deadline: null,
         kode: ""
       },
       dataKelas: "",

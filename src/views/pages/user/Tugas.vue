@@ -13,7 +13,7 @@
 
         <vs-row>
           <vs-col vs-type="flex" vs-align="center" vs-w="6">
-            <small class="italic">Ditugaskan pada: {{ item.created_at }}</small>
+          <small class="italic">Batas pengumpulan: {{ item.deadline }}</small>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="end" vs-align="center" vs-w="6">
             <vs-button @click="$router.push({ name: 'upload-tugas-user', params: { kode: kode, id: item.id } })">Upload Assignment</vs-button>

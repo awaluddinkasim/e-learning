@@ -22,6 +22,12 @@
         label="Instruksi"
         class="w-full mt-6"
       />
+      <vs-input
+        label="Batas Kumpul"
+        v-model="formMateri.deadline"
+        size="large"
+        class="w-full mt-6"
+      />
 
       <input type="file" name="file" id="file" @change="handleFile($event)">
       <div class="flex flex-wrap justify-end my-3">
@@ -41,7 +47,7 @@
 
       <vs-row>
         <vs-col vs-type="flex" vs-w="6" vs-align="center">
-          <small class="italic">Dibuat pada: {{ item.created_at }}</small>
+          <small class="italic">Batas pengumpulan: {{ item.deadline }}</small>
         </vs-col>
         <vs-col vs-type="flex" vs-justify="end" vs-align="center" vs-w="6">
           <vs-button @click="download(item.id)">Download File</vs-button>
@@ -62,6 +68,7 @@ export default {
       formMateri: {
         judul: "",
         instruksi: "",
+        deadline: null,
         file: ""
       },
       kode: this.$route.params.kode,
