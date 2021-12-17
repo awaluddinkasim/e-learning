@@ -24,6 +24,7 @@
       />
       <vs-input
         label="Batas Kumpul"
+        type="date"
         v-model="formMateri.deadline"
         size="large"
         class="w-full mt-6"
@@ -50,6 +51,7 @@
           <small class="italic">Batas pengumpulan: {{ item.deadline }}</small>
         </vs-col>
         <vs-col vs-type="flex" vs-justify="end" vs-align="center" vs-w="6">
+          <vs-button @click="hapus(item.id)" class="mr-1 bg-danger">Hapus</vs-button>
           <vs-button @click="download(item.id)">Download File</vs-button>
         </vs-col>
       </vs-row>
@@ -83,6 +85,14 @@ export default {
     download(id) {
       window.open(axios.defaults.baseURL + '/download/kuis/' + id)
     },
+    hapus(id) {
+      this.$vs.loading()
+      axios.delete('dosen/kuis/'+id).then((response) => {
+        console.log(response)
+        this.fetchDetail()
+        this.$vs.loading.close()
+      })
+    },
     async fetchDetail() {
       let data = await axios.get("dosen/kuis/" + this.kode);
       this.daftarKuis = data.data.daftarKuis;
@@ -100,6 +110,7 @@ export default {
       formData.append('kode', this.kode)
       formData.append('judul', this.formMateri.judul)
       formData.append('instruksi', this.formMateri.instruksi)
+      formData.append('deadline', this.formMateri.deadline)
       formData.append('file', this.formMateri.file)
 
       axios.post('dosen/kuis', formData, { headers: { 'Content-Type' : 'multipart/form-data' } }).then((response) => {

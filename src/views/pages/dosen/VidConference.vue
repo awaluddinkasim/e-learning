@@ -145,6 +145,8 @@ export default {
               VueThis.localTrack = true;
             });
           }
+        }).catch(() => {
+          console.log("gagal")
         });
       });
     }

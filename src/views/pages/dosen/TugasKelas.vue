@@ -53,6 +53,7 @@
             <span
               >Tugas terkumpul: <b>{{ item.tugas_masuk.length }}</b></span
             >
+          <vs-button @click="hapus(item.id)" class="ml-3 bg-danger">Hapus</vs-button>
           </vs-col>
         </vs-row>
       </vx-card>
@@ -83,6 +84,14 @@ export default {
     this.formTugas.kode = this.kode;
   },
   methods: {
+    hapus(id) {
+      this.$vs.loading()
+      axios.delete('dosen/tugas/'+id).then((response) => {
+        console.log(response)
+        this.fetchDetail()
+        this.$vs.loading.close()
+      })
+    },
     async fetchDetail() {
       let data = await axios.get("dosen/kelas/data/" + this.kode);
       this.dataKelas = data.data.detail;
